@@ -28,32 +28,32 @@ Projeto desenvolvido para fins acadêmicos, com o objetivo de gerenciar agendame
 
 1. Instalar dependências:
 
-cd backend
-npm install
+   cd backend
+   npm install
 
 2. Configurar variáveis de ambiente (.env):
-   
-DATABASE_URL=postgresql://USER:PASSWORD@localhost:5432/yourdb
+      
+   DATABASE_URL=postgresql://USER:PASSWORD@localhost:5432/yourdb
 
 3. Executar migrações do Prisma:
 
-npx prisma migrate dev --name init
-npx prisma generate
+   npx prisma migrate dev --name init
+   npx prisma generate
 
 4. Rodar o backend:
 
-npm run start:dev
+   npm run start:dev
 
 Frontend
 1. Instalar dependências:
 
-cd frontend
-npm install
+   cd frontend
+   npm install
 
 2. Configurar variáveis de ambiente (.env.local):
 
-NEXT_PUBLIC_API_URL=http://localhost:portaBackend
+   NEXT_PUBLIC_API_URL=http://localhost:portaBackend
 
 3. Rodar o frontend:
 
-npm run dev
+   npm run dev
