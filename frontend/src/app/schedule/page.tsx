@@ -28,18 +28,18 @@ export default function SchedulePage() {
   // Carregar especialidades
   useEffect(() => {
     fetch(`${API_URL}/specialties`)
-      .then(res => res.json())
-      .then(data => setSpecialties(data))
-      .catch(err => console.error("Erro ao buscar especialidades:", err));
+      .then((res) => res.json())
+      .then((data) => setSpecialties(data))
+      .catch((err) => console.error("Erro ao buscar especialidades:", err));
   }, [API_URL]);
 
   // Quando selecionar especialidade, buscar profissionais
   useEffect(() => {
     if (selectedSpecialty) {
       fetch(`${API_URL}/professionals/specialty/${selectedSpecialty}`)
-        .then(res => res.json())
-        .then(data => setProfessionals(data))
-        .catch(err => console.error("Erro ao buscar profissionais:", err));
+        .then((res) => res.json())
+        .then((data) => setProfessionals(data))
+        .catch((err) => console.error("Erro ao buscar profissionais:", err));
     } else {
       setProfessionals([]);
     }
@@ -49,14 +49,14 @@ export default function SchedulePage() {
   useEffect(() => {
     if (selectedProfessional) {
       fetch(`${API_URL}/appointments/available/${selectedProfessional}`)
-        .then(res => res.json())
+        .then((res) => res.json())
         .then((data: string[]) => {
           const now = new Date();
           const currentMonth = now.getMonth();
           const currentYear = now.getFullYear();
 
           // Filtra datas futuras do mês atual
-          const filteredDates = data.filter(d => {
+          const filteredDates = data.filter((d) => {
             const date = new Date(d);
             return (
               date.getFullYear() === currentYear &&
@@ -67,7 +67,9 @@ export default function SchedulePage() {
 
           setDates(filteredDates);
         })
-        .catch(err => console.error("Erro ao buscar datas disponíveis:", err));
+        .catch((err) =>
+          console.error("Erro ao buscar datas disponíveis:", err)
+        );
     } else {
       setDates([]);
     }
@@ -115,7 +117,7 @@ export default function SchedulePage() {
           id="cpf"
           placeholder="Digite seu CPF"
           value={cpf}
-          onChange={e => setCpf(e.target.value)}
+          onChange={(e) => setCpf(e.target.value)}
         />
       </div>
 
@@ -125,7 +127,7 @@ export default function SchedulePage() {
           id="name"
           placeholder="Digite seu nome"
           value={name}
-          onChange={e => setName(e.target.value)}
+          onChange={(e) => setName(e.target.value)}
         />
       </div>
 
@@ -137,7 +139,7 @@ export default function SchedulePage() {
             <SelectValue placeholder="Selecione a especialidade" />
           </SelectTrigger>
           <SelectContent>
-            {specialties.map(s => (
+            {specialties.map((s) => (
               <SelectItem key={s.id} value={s.id}>
                 {s.name}
               </SelectItem>
@@ -158,7 +160,7 @@ export default function SchedulePage() {
               <SelectValue placeholder="Selecione o médico" />
             </SelectTrigger>
             <SelectContent>
-              {professionals.map(p => (
+              {professionals.map((p) => (
                 <SelectItem key={p.id} value={p.id}>
                   {p.name}
                 </SelectItem>
@@ -177,7 +179,7 @@ export default function SchedulePage() {
               <SelectValue placeholder="Selecione a data" />
             </SelectTrigger>
             <SelectContent>
-              {dates.map(d => (
+              {dates.map((d) => (
                 <SelectItem key={d} value={d}>
                   {new Date(d).toLocaleString("pt-BR", {
                     dateStyle: "short",

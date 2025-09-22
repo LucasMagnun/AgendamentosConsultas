@@ -13,7 +13,9 @@ export default function AppointmentsPage() {
   async function handleSearch() {
     setLoading(true);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/appointments/patient/${cpf}`);
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/appointments/patient/${cpf}`
+      );
       console.log("Status da resposta:", res.status);
 
       if (res.status === 404) {
@@ -38,9 +40,12 @@ export default function AppointmentsPage() {
     if (!confirm("Deseja realmente cancelar esta consulta?")) return;
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/appointments/${id}/cancel`, {
-        method: "PATCH",
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/appointments/${id}/cancel`,
+        {
+          method: "PATCH",
+        }
+      );
 
       if (!res.ok) throw new Error("Falha ao cancelar consulta");
 
@@ -80,33 +85,33 @@ export default function AppointmentsPage() {
           appointments.map((appt) => (
             <Card key={appt.id}>
               <CardContent className="p-4 space-y-2">
-  <p>
-    <span className="font-semibold">Data:</span>{" "}
-    {new Date(appt.date).toLocaleString()}
-  </p>
-  <p>
-    <span className="font-semibold">Médico:</span>{" "}
-    {appt.professional?.name}
-  </p>
-  <p>
-    <span className="font-semibold">Especialidade:</span>{" "}
-    {appt.professional?.specialty?.name || "—"}
-  </p>
-  <p>
-    <span className="font-semibold">Cancelado:</span>{" "}
-    {appt.canceled ? "Sim" : "Não"}
-  </p>
-  {!appt.canceled && (
-    <Button
-      variant="destructive"
-      size="sm"
-      className="hover:bg-red-700 transition-colors" // hover
-      onClick={() => handleCancel(appt.id)}
-    >
-      Cancelar
-    </Button>
-  )}
-</CardContent>
+                <p>
+                  <span className="font-semibold">Data:</span>{" "}
+                  {new Date(appt.date).toLocaleString()}
+                </p>
+                <p>
+                  <span className="font-semibold">Médico:</span>{" "}
+                  {appt.professional?.name}
+                </p>
+                <p>
+                  <span className="font-semibold">Especialidade:</span>{" "}
+                  {appt.professional?.specialty?.name || "—"}
+                </p>
+                <p>
+                  <span className="font-semibold">Cancelado:</span>{" "}
+                  {appt.canceled ? "Sim" : "Não"}
+                </p>
+                {!appt.canceled && (
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    className="hover:bg-red-700 transition-colors" // hover
+                    onClick={() => handleCancel(appt.id)}
+                  >
+                    Cancelar
+                  </Button>
+                )}
+              </CardContent>
             </Card>
           ))
         ) : (
