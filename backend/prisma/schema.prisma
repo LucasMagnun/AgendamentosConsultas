@@ -4,43 +4,34 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
-generator client {
-  provider = "prisma-client-js"
-}
-
-model Patient {
-  id          Int          @id @default(autoincrement())
-  name        String
-  cpf         String       @unique
-  appointments Appointment[]
-}
-
 model Specialty {
-  id            Int           @id @default(autoincrement())
-  name          String        @unique
+  id           Int          @id @default(autoincrement())
+  name         String
   professionals Professional[]
 }
 
 model Professional {
-  id             Int           @id @default(autoincrement())
-  name           String
-  specialty      Specialty     @relation(fields: [specialtyId], references: [id])
-  specialtyId    Int
-  appointments   Appointment[]
+  id           Int          @id @default(autoincrement())
+  name         String
+  specialtyId  Int
+  specialty    Specialty    @relation(fields: [specialtyId], references: [id])
+  appointments Appointment[]
+}
+
+model Patient {
+  id           Int          @id @default(autoincrement())
+  name         String
+  cpf          String       @unique
+  appointments Appointment[]
 }
 
 model Appointment {
-  id             Int          @id @default(autoincrement())
-  date           DateTime
-  patient        Patient      @relation(fields: [patientId], references: [id])
-  patientId      Int
-  professional   Professional @relation(fields: [professionalId], references: [id])
+  id            Int          @id @default(autoincrement())
+  date          DateTime
+  canceled      Boolean      @default(false)
+  createdAt     DateTime     @default(now())
+  patientId     Int
+  patient       Patient      @relation(fields: [patientId], references: [id])
   professionalId Int
-  createdAt      DateTime     @default(now())
-  canceled       Boolean      @default(false)
+  professional  Professional @relation(fields: [professionalId], references: [id])
 }

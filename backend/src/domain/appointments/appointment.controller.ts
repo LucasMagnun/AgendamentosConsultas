@@ -5,10 +5,14 @@ import { AppointmentService } from './appointment.service';
 export class AppointmentController {
   constructor(private readonly service: AppointmentService) {}
 
-  @Post()
-  create(@Body() body: { patientId: number; professionalId: number; date: string }) {
-    return this.service.create(body);
-  }
+@Post()
+create(
+  @Body()
+  body: { cpf: string; name: string; professionalId: number; date: string }
+) {
+  return this.service.create(body);
+}
+
 
   @Get()
   findAll() {
@@ -23,5 +27,10 @@ export class AppointmentController {
   @Patch(':id/cancel')
   cancel(@Param('id', ParseIntPipe) id: number) {
     return this.service.cancel(id);
+  }
+
+    @Get('available/:professionalId')
+  getAvailable(@Param('professionalId', ParseIntPipe) professionalId: number) {
+    return this.service.getAvailableDates(professionalId);
   }
 }
